@@ -50,6 +50,7 @@ class Question extends Component {
 
     render() {
         const { data, loading, error } = this.state;
+        const { match } = this.props;
 
         if (loading || error) {
             return (

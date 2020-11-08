@@ -94,7 +94,7 @@ class Feed extends Component {
           <Helmet>
             <title>Q&A Feed - Questions</title>
           </Helmet>
-          <Alert>{loading ? 'Loading...' : error}</Alert>;
+          <Alert>{loading ? 'Loading...' : error}</Alert>
         </>
       );
     }
