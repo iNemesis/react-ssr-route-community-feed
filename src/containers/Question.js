@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import Card from '../components/Card/Card';
 
@@ -51,13 +52,25 @@ class Question extends Component {
         const { data, loading, error } = this.state;
 
         if (loading || error) {
-            return <Alert>{loading ? 'Loading...' : error}</Alert>;
+            return (
+                <>
+                    <Helmet>
+                        <title>{`Q&A Feed - Question #${match.params.id}`}</title>
+                    </Helmet>
+                    <Alert>{loading ? 'Loading...' : error}</Alert>
+                </>
+            );
         }
 
         return (
-            <QuestionWrapper>
-                <Card key={data.items[0].question_id} data={data.items[0]} />
-            </QuestionWrapper>
+            <>
+                <Helmet>
+                    <title>{`Q&A Feed - Question #${match.params.id}`}</title>
+                </Helmet>
+                <QuestionWrapper>
+                    <Card key={data.items[0].question_id} data={data.items[0]} />
+                </QuestionWrapper>
+            </>
         );
     }
 }
