@@ -4,6 +4,7 @@ import express from 'express';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import App from '../src/containers/App';
 
@@ -13,6 +14,7 @@ const app = express();
 app.get('/*', (req, res) => {
     const context = {};
     const app = ReactDOMServer.renderToString(<StaticRouter location={req.url} context={context}><App /></StaticRouter>);
+    const helmet = Helmet.renderStatic();
 
     const indexFile = path.resolve('./build/index.html');
     fs.readFile(indexFile, 'utf8', (err, data) => {
@@ -21,9 +23,8 @@ app.get('/*', (req, res) => {
             return res.status(500).send('Oops, better luck next time!');
         }
 
-        console.log(app);
-
         data = data.replace('<div id="root"></div>', `<div id="root">${app}</div>`);
+        data = data.replace('<meta name="helmet"/>', `${helmet.title.toString()}${helmet.meta.toString()}`);
 
         return res.send(data);
     })
